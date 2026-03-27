@@ -11,20 +11,51 @@ public class Esfera : MonoBehaviour
 
     }
 
-    
-    void Update()
-    {
-
-        
-    }
 
     private void FixedUpdate()
     {
        float movimientoHorizontal = Input.GetAxis("Horizontal");
        float movimientoVertical = Input.GetAxis("Vertical");
 
-        Vector3 movimiento = new Vector3(movimientoHorizontal * velocidad, rb.linearVelocity.y, movimientoVertical * velocidad);
+        Vector3 direccion = new Vector3(movimientoHorizontal, 0.0f, movimientoVertical);
 
-       rb.linearVelocity = movimiento;
+        if (direccion.magnitude > 1)
+        {
+            direccion = direccion.normalized;
+        }
+
+
+        Vector3 movimiento = new Vector3(direccion.x * velocidad, rb.linearVelocity.y, direccion.z * velocidad);
+
+       // Debug.Log("movimiento Magnitud: " + movimiento.magnitude);
+
+        rb.linearVelocity = movimiento;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Collectible"))
+        {
+            Debug.Log("Trigger collectible");
+            Destroy(other.gameObject);
+        }
+
+        
+
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Collectible"))
+        {
+            Debug.Log("Collision collectible");
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Dead"))
+        {
+            Destroy(gameObject);
+        }
+    }
+   
 }

@@ -21,14 +21,6 @@ public class Codo : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(anguloActual, 0f, 0f);
 
-        
-        //anguloAcumulado += velocidad * Time.deltaTime;
-
-       
-        //anguloAcumulado %= 360;
-
-        
-        //transform.localRotation = Quaternion.Euler(anguloAcumulado, 0f, 0f);
 
     }
 }
